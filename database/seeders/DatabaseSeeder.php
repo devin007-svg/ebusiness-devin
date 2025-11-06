@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         // ✅ Buat akun ADMIN default
         User::factory()->create([
-            'name' => 'Huda (Admin)',
+            'name' => 'Administrator',
             'email' => 'admin@example.com',
             'password' => Hash::make('admin123'), // 🟢 gunakan Hash::make()
             'role' => 'admin',
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         // ✅ Buat akun USER biasa
         User::factory()->create([
-            'name' => 'Huda (User)',
+            'name' => 'User B aja',
             'email' => 'user@example.com',
             'password' => Hash::make('user123'), // 🟢 juga pakai Hash::make()
             'role' => 'user',
