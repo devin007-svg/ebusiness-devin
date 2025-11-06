@@ -1,19 +1,26 @@
-# 💼 E-Business 2 Tugas
-
-Proyek ini dibuat untuk memenuhi tugas mata kuliah **E-Business 2 (Semester 5)**.  
-Aplikasi ini dibangun menggunakan **Laravel Framework**.
+# 💼 E-Business 2 — Tugas
 
 ---
-
 
 ## 🖼️ Screenshots
 
-| 🪪 Login Page | 🧑‍💼 Dashboard Admin |
-|:-------------:|:------------------:|
-| ![Login](ss/login.png) | ![Admin](ss/admin.png) |
-
-| 👤 Dashboard User | 🧩 php artisan route:list |
-|:-----------------:|:--------------------------:|
-| ![User](ss/user.png) | ![php artisan](ss/php.png) |
+### 🪪 Login Page
+![Login Page](screenshot/login.png)
 
 ---
+
+### 🧑‍💼 Dashboard Admin
+![Dashboard Admin](screenshot/admin.png)
+
+---
+
+### 👤 Dashboard User
+![Dashboard User](screenshot/user.png)
+
+---
+
+### 🧩 php artisan route:list
+![php artisan route:list](screenshot/php.png)
+
+---
+
