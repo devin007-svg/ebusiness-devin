@@ -401,7 +401,6 @@
                                         <i class="fas fa-sign-out-alt"></i> Logout
                                     </button>
                                 </form>
-
                             </div>
                         </div>
                     </div>
