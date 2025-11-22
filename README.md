@@ -19,6 +19,21 @@
 
 ---
 
+### Manajemen Produk
+![Manajemen Produk](screenshot/manajemenproduk.png)
+
+---
+
+### Tambah Produk
+![Tambah Produk](screenshot/tambahproduk.png)
+
+---
+
+### Edit Produk
+![Edit Produk](screenshot/editproduk.png)
+
+---
+
 ### 🧩 php artisan route:list
 ![php artisan route:list](screenshot/php.png)
 
