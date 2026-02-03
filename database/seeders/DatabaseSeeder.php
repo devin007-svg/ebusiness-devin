@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         // ✅ Buat akun USER biasa
         User::factory()->create([
-            'name' => 'User B aja',
+            'name' => 'Hao Gege',
             'email' => 'user@example.com',
             'password' => Hash::make('user123'), // 🟢 juga pakai Hash::make()
             'role' => 'user',
