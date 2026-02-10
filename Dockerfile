@@ -1,16 +1,15 @@
 FROM php:8.2-apache
 
-# Laravel harus serve dari /public
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
-# System deps + PHP extensions + Apache rewrite + set docroot + allow .htaccess
 RUN apt-get update && apt-get install -y \
     libpng-dev libjpeg-dev libfreetype6-dev \
     libjpeg62-turbo-dev \
     libzip-dev zip unzip git curl \
     libonig-dev pkg-config \
+    sqlite3 libsqlite3-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo_mysql mbstring zip \
+    && docker-php-ext-install -j$(nproc) gd pdo_mysql pdo_sqlite mbstring zip \
     && a2enmod rewrite \
     && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
         /etc/apache2/sites-available/*.conf \
@@ -36,21 +35,13 @@ COPY . .
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install PHP deps (jangan pakai --no-scripts)
 RUN composer install --no-dev --optimize-autoloader
-
-# Build Vite assets -> menghasilkan public/build/manifest.json
-# (kalau kamu pakai yarn/pnpm, ganti perintahnya)
 RUN npm ci && npm run build
 
-# Buat file SQLite + permission
-RUN mkdir -p database \
-    && touch database/database.sqlite \
-    && chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache \
-    && chmod 664 database/database.sqlite
+# Permission dasar (biarkan db dibuat saat runtime oleh entrypoint)
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache
 
-# Entrypoint untuk migrate saat start
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
