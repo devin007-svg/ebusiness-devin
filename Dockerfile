@@ -1,5 +1,6 @@
 FROM php:8.2-apache
 
+# Laravel harus serve dari /public
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
 RUN apt-get update && apt-get install -y \
@@ -11,6 +12,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo_mysql pdo_sqlite mbstring zip \
     && a2enmod rewrite \
+    # ===== FIX: cegah "More than one MPM loaded" =====
+    && a2dismod mpm_event mpm_worker || true \
+    && a2enmod mpm_prefork \
+    # ===============================================
     && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
         /etc/apache2/sites-available/*.conf \
         /etc/apache2/apache2.conf \
@@ -38,7 +43,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer install --no-dev --optimize-autoloader
 RUN npm ci && npm run build
 
-# Permission dasar (biarkan db dibuat saat runtime oleh entrypoint)
+# Permission dasar
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
