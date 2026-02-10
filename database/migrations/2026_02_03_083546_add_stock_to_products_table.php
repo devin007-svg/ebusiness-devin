@@ -6,21 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->integer('stock')->default(0)->after('price'); // sesuaikan after(...)
-        });
+        // Cek dulu: kalau kolom stock belum ada, baru tambahkan
+        if (!Schema::hasColumn('products', 'stock')) {
+            Schema::table('products', function (Blueprint $table) {
+                $table->integer('stock')->default(0)->after('price');
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('stock');
-        });
+        // Drop hanya kalau kolomnya memang ada
+        if (Schema::hasColumn('products', 'stock')) {
+            Schema::table('products', function (Blueprint $table) {
+                $table->dropColumn('stock');
+            });
+        }
     }
-
 };
